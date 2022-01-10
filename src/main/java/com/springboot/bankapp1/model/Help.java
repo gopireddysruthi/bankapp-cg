@@ -1,4 +1,4 @@
-package com.springboot.bankapp.model;
+package com.springboot.bankapp1.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
