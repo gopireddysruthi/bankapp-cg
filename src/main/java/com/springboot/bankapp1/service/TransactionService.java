@@ -9,24 +9,32 @@ import com.springboot.bankapp1.repository.UserRepository;
 
 @Service
 public class TransactionService {
+
+	@Autowired
+	private UserRepository userRepository; 
 	
 	@Autowired
-	private UserRepository userRepository;
+	private TransactionRepository transactionRepository;
 	
 	public String fetchFromAccountNumber(String username) {
-		
+		 
 		return userRepository.fetchFromAccountNumber(username);
 	}
-	public void updateBalance(String fromAccountNumber,double amount) {
-		
+	
+	
+	public void updateBalance(String fromAccountNumber, double amount) {
 		userRepository.updateBalance(fromAccountNumber,amount);
 	}
-	public void creditAmount(String toAccountNumber,double amount) {
-		userRepository.creditAmount(toAccountNumber,amount);
-	}
-	public Transaction saveTransaction(Transaction transaction) {
+
+
+	public void creditAmount(String toAccountNumber, double amount) {
+		userRepository.creditAmount(toAccountNumber,amount); 
 		
-		return TransactionRepository.save(null);
+	}
+
+
+	public Transaction saveTransaction(Transaction transaction) {
+		return transactionRepository.save(transaction);
 	}
 
 }

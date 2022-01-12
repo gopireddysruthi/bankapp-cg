@@ -11,17 +11,17 @@ import com.springboot.bankapp1.model.UserInfo;
 public interface UserRepository extends JpaRepository<UserInfo, Long>{
 
 	UserInfo findByUsername(String username);
-	
+
 	@Query("select a.accountNumber from Customer c join c.userInfo u join c.account a where u.username=?1")
 	String fetchFromAccountNumber(String username);
-	
+
 	@Transactional
 	@Modifying
 	@Query("update Account a SET a.balance=a.balance-?2 where a.accountNumber=?1")
-	void updateBalance(String fromAccounTNumber,double amount);
-	
+	void updateBalance(String fromAccountNumber, double amount);
+
 	@Transactional
 	@Modifying
 	@Query("update Account a SET a.balance=a.balance+?2 where a.accountNumber=?1")
-	void creditAmount(String fromAccounTNumber,double amount);
+	void creditAmount(String toAccountNumber, double amount);
 }
