@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springboot.bankapp1.model.Account;
+import com.springboot.bankapp1.model.Help;
 import com.springboot.bankapp1.model.Transaction;
+import com.springboot.bankapp1.repository.HelpRepository;
 import com.springboot.bankapp1.repository.TransactionRepository;
 import com.springboot.bankapp1.repository.UserRepository;
 
@@ -17,6 +20,9 @@ public class TransactionService {
 	
 	@Autowired
 	private TransactionRepository transactionRepository;
+	
+	@Autowired
+	private HelpRepository helpRepository;
 	
 	public String fetchFromAccountNumber(String username) {
 		 
@@ -38,14 +44,35 @@ public class TransactionService {
 	public Transaction saveTransaction(Transaction transaction) {
 		return transactionRepository.save(transaction);
 	}
-
-
 	public List<Transaction> fetchTransactionsByAccountNumber(String accountNumber) {
-		 
+
 		return transactionRepository.fetchTransactionsByAccountNumber(accountNumber);
 	}
 	public void depositAmount(String accountNumber, double amount) {
 		transactionRepository.depositAmount(accountNumber, amount);
 	}
+	public Account getAccountByAccountNumber(String accountNumber) {
+		return transactionRepository.getAccountByAccountNumber(accountNumber);
+	}
+
+
+	public Help postQnA(Help help) {
+		// TODO Auto-generated method stub
+		help.setQuestion(help.getQuestion());
+		help.setAnswer(help.getAnswer());
+		return helpRepository.save(help);
+	}
+	public Help getQnA(Long id) {
+		return transactionRepository.getQnA(id);
+	}
+	
+	//public Help postQnA(Help help) {
+		//help.setQuestion(help.getQuestion());
+		//help.setAnswer(help.getAnswer());
+		//return helpRepository.save(help);
+	//}
+	//public Help getQnA(Long id) {
+	//	return transactionRepository.getQnA(id);
+	//}
 
 }

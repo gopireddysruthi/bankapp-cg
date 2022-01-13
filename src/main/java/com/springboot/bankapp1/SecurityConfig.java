@@ -15,29 +15,28 @@ import com.springboot.bankapp1.service.MyUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
-
+public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private MyUserDetailsService myUserDetailsService;
-	
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {
-		 PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
-		 return passwordEncoder;
+		PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+		return passwordEncoder;
 	}
-	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(getDBAuthenticator());
 	}
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 		 .antMatchers("/customer").permitAll()
-		 .antMatchers("/user").authenticated()
-		 .antMatchers("/transfer").authenticated()
-		 .antMatchers("/statement/**/**").authenticated()
+         .antMatchers("/user").authenticated()
+         .antMatchers("/transfer").authenticated()
+         .antMatchers("/statement/**/**").authenticated()
+         .antMatchers("/deposit/**").authenticated()
+         .antMatchers("//balance").authenticated()
 		 .anyRequest()
 		 .permitAll()
 		 .and()
@@ -45,11 +44,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		 .and()
 		 .csrf().disable(); 
 	}
-	
+
 	public DaoAuthenticationProvider  getDBAuthenticator(){
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
 		auth.setUserDetailsService(myUserDetailsService);
 		auth.setPasswordEncoder(getPasswordEncoder());
 		return auth; 
 	}
+
+	
 }
