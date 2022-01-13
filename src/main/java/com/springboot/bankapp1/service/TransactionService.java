@@ -1,5 +1,7 @@
 package com.springboot.bankapp1.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,15 @@ public class TransactionService {
 
 	public Transaction saveTransaction(Transaction transaction) {
 		return transactionRepository.save(transaction);
+	}
+
+
+	public List<Transaction> fetchTransactionsByAccountNumber(String accountNumber) {
+		 
+		return transactionRepository.fetchTransactionsByAccountNumber(accountNumber);
+	}
+	public void depositAmount(String accountNumber, double amount) {
+		transactionRepository.depositAmount(accountNumber, amount);
 	}
 
 }
